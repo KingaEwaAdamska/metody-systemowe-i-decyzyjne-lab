@@ -26,7 +26,17 @@ def load_and_split_data(
     """
 
     df = pd.read_csv(filepath)
-    X = df.drop(columns=[target_col, 'Depression_Score'])
+
+    leaky_columns = [
+        target_col,
+        'Depression_Score',
+        'Symptoms',
+        'Nervous_Level',
+        'Coping_Methods'
+    ]
+    
+    # Tworzymy zbiór cech bazujących w 100% na stylu życia i demografii
+    X = df.drop(columns=leaky_columns)
     y = df[target_col]
 
     X_train, X_test, y_train, y_test = train_test_split(

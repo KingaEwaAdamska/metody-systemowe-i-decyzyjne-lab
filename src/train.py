@@ -3,7 +3,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
 
-from test1_depression_dataset.utils import load_and_split_data, train_model, evaluate_model, save_model
+from utils import load_and_split_data, train_model, evaluate_model, save_model
 
 
 def main():
@@ -41,15 +41,6 @@ def main():
     results_df = pd.DataFrame(results).sort_values(by="F1 Score", ascending=False)
     print("\nModel Performance:")
     print(results_df[["Model", "Accuracy", "F1 Score"]])
-
-    rf_model = models["Random Forest"]
-
-    importances = pd.DataFrame(
-        {"Cecha": X_train.columns, "Ważność": rf_model.feature_importances_}
-    ).sort_values(by="Ważność", ascending=False)
-
-    print("\n--- Ważność cech (Feature Importances) ---")
-    print(importances)
 
 
 if __name__ == "__main__":
