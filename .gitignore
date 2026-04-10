@@ -21,3 +21,4 @@ Thumbs.db
 
 # Dane (opcjonalnie - jeśli nie chcesz wysyłać dużych plików CSV na GitHub)
 data/raw/*.csv
+models/*.pkl
