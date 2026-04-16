@@ -42,6 +42,15 @@ def main():
     print("\nModel Performance:")
     print(results_df[["Model", "Accuracy", "F1 Score"]])
 
+    rf_model = models["Random Forest"]
+
+    importances = pd.DataFrame(
+        {"Cecha": X_train.columns, "Ważność": rf_model.feature_importances_}
+    ).sort_values(by="Ważność", ascending=False)
+
+    print("\n--- Ważność cech (Feature Importances) ---")
+    print(importances)
+
 
 if __name__ == "__main__":
     main()
