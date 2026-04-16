@@ -119,22 +119,3 @@ Liczba funkcji przynależności
 |                |          |          |
 
 ## Wnioski
-
-1. Modele uczenia maszynowego (szczególnie Random Forest i Gradient Boosting)
-   osiągnęły najwyższą skuteczność predykcji.
-
-2. System oparty na logice rozmytej był mniej dokładny, ale bardziej
-   interpretowalny i szybszy w działaniu.
-
-3. Liczba funkcji przynależności ma istotny wpływ na jakość systemu
-   fuzzy – najlepsze wyniki uzyskano dla 3 funkcji.
-
-4. Typ funkcji przynależności wpływa na stabilność systemu –
-   funkcje gaussowskie dają najbardziej płynne wyniki.
-
-5. Zwiększenie liczby cech nie zawsze poprawia wyniki –
-   nadmiar cech może pogarszać jakość reguł fuzzy.
-
-6. ML lepiej sprawdza się w zadaniach predykcyjnych,
-   natomiast fuzzy logic lepiej nadaje się do systemów
-   decyzyjnych wymagających interpretowalności.
