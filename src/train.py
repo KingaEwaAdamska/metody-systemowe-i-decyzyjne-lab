@@ -1,16 +1,24 @@
+
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
 
+from plots import test_decision_tree_depth, test_hist_gradient_boosting, test_hist_gradient_boosting, test_logistic_regression, test_random_forest_depth, test_random_forest_depth_and_estimators, test_random_forest_estimators
 from utils import load_and_split_data, train_model, evaluate_model, save_model
-
 
 def main():
     DATA_PATH = "data/raw/Mental Health Classification.csv"
     TARGET_COL = "Depression_Type"
 
     X_train, X_test, y_train, y_test = load_and_split_data(DATA_PATH, TARGET_COL)
+
+    test_random_forest_estimators(X_train, y_train, X_test, y_test)
+    test_logistic_regression(X_train, y_train, X_test, y_test)
+    test_decision_tree_depth(X_train, y_train, X_test, y_test)
+    test_hist_gradient_boosting(X_train, y_train, X_test, y_test)
+    test_random_forest_depth(X_train, y_train, X_test, y_test)
+    test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test)
 
     models = {
         "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
