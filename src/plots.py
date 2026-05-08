@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
@@ -39,7 +37,12 @@ def test_random_forest_estimators(X_train, y_train, X_test, y_test):
     plt.xlabel("Number of Estimators")
     plt.ylabel("Score")
     plt.legend()
-    plt.savefig(f"plots/{datetime.now().strftime('%Y%m%d_%H%M%S')}_rf_estimators.png")
+    plt.savefig("plots/rf_estimators.png")
+
+    results_df.to_csv(
+        "results/rf_estimators_results.csv",
+        index=False,
+    )
 
 
 def test_random_forest_depth(X_train, y_train, X_test, y_test):
@@ -74,7 +77,12 @@ def test_random_forest_depth(X_train, y_train, X_test, y_test):
     plt.xlabel("Max Depth")
     plt.ylabel("Score")
     plt.legend()
-    plt.savefig(f"plots/{datetime.now().strftime('%Y%m%d_%H%M%S')}_rf_max_depth.png")
+    plt.savefig("plots/rf_max_depth.png")
+
+    results_df.to_csv(
+        "results/rf_max_depth_results.csv",
+        index=False,
+    )
 
 
 def test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test):
@@ -122,7 +130,12 @@ def test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test):
     ax.set_zlabel("Score")
     ax.legend()
     plt.savefig(
-        f"plots/{datetime.now().strftime('%Y%m%d_%H%M%S')}_rf_depth_estimators.png"
+        "plots/rf_depth_estimators.png"
+    )
+
+    results_df.to_csv(
+        "results/rf_depth_estimators_results.csv",
+        index=False,
     )
 
 
@@ -157,7 +170,12 @@ def test_decision_tree_depth(X_train, y_train, X_test, y_test):
     plt.ylabel("Score")
     plt.legend()
     plt.savefig(
-        f"plots/{datetime.now().strftime('%Y%m%d_%H%M%S')}_decision_tree_depth.png"
+        "plots/decision_tree_depth.png"
+    )
+
+    results_df.to_csv(
+        "results/decision_tree_depth_results.csv",
+        index=False,
     )
 
 
@@ -185,7 +203,12 @@ def test_logistic_regression(X_train, y_train, X_test, y_test):
     plt.ylabel("Score")
     plt.legend()
     plt.savefig(
-        f"plots/{datetime.now().strftime('%Y%m%d_%H%M%S')}_logistic_regression_C.png"
+        "plots/logistic_regression_C.png"
+    )
+
+    results_df.to_csv(
+        "results/logistic_regression_C_results.csv",
+        index=False,
     )
 
 
@@ -227,5 +250,10 @@ def test_hist_gradient_boosting(X_train, y_train, X_test, y_test):
     plt.ylabel("Score")
     plt.legend()
     plt.savefig(
-        f"plots/{datetime.now().strftime('%Y%m%d_%H%M%S')}_hist_gradient_boosting_lr.png"
+        "plots/hist_gradient_boosting_lr.png"
+    )
+
+    results_df.to_csv(
+        "results/hist_gradient_boosting_lr_results.csv",
+        index=False,
     )
