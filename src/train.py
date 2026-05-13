@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
 
-from plots import test_decision_tree_depth, test_hist_gradient_boosting, test_hist_gradient_boosting, test_logistic_regression, test_random_forest_depth, test_random_forest_depth_and_estimators, test_random_forest_estimators
+from plots import test_decision_tree_depth, test_hist_gradient_boosting, test_logistic_regression, test_random_forest_depth, test_random_forest_depth_and_estimators, test_random_forest_estimators, test_random_forest_depth_and_estimators_surface
 from utils import load_and_split_data, train_model, evaluate_model, save_model
 
 def main():
@@ -19,6 +19,7 @@ def main():
     test_hist_gradient_boosting(X_train, y_train, X_test, y_test)
     test_random_forest_depth(X_train, y_train, X_test, y_test)
     test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test)
+    test_random_forest_depth_and_estimators_surface(X_train, y_train, X_test, y_test)
 
     models = {
         "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),

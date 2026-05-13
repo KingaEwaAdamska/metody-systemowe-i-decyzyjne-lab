@@ -132,7 +132,7 @@ Kluczem do optymalnego gradient boostingu okazały się bardzo niskie wartości 
 
 Poniżej zamieszczono dodatkowy wykres wizualizujący zachowanie jakości modelu algorytmu Random Forest na podstawie manipulacji wielowymiarowej uwzględniając na raz głębokość w korelacji z ilością estymatorów.
 
-![Random Forest - Depth vs Estimators](../plots/rf_depth_estimators.png)
+![Random Forest - Depth vs Estimators](../plots/rf_depth_estimators_surface.png)
 
 Przestrzeń poszukiwań potwierdza zjawisko stabilnego płaskowyżu. Najwyższa jakość gwarantowana jest dla rozwiązań odciętych z głębokością ponad 20 oraz wielkością lasu powyżej 100 składowych.
 

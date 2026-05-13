@@ -139,6 +139,65 @@ def test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test):
     )
 
 
+def test_random_forest_depth_and_estimators_surface(X_train, y_train, X_test, y_test):
+    max_depths = [5, 10, 20, 50, 100]
+    estimator_counts = [10, 25, 50, 100, 200, 500]
+    results = []
+
+    import numpy as np
+    from mpl_toolkits.mplot3d import Axes3D
+
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection="3d")
+    
+    X, Y = np.meshgrid(max_depths, estimator_counts)
+    Z_acc = np.zeros(X.shape)
+    Z_f1 = np.zeros(X.shape)
+
+    for i, depth in enumerate(max_depths):
+        for j, n in enumerate(estimator_counts):
+            model = RandomForestClassifier(
+                random_state=42, n_estimators=n, max_depth=depth
+            )
+            trained_model = train_model(model, X_train, y_train)
+            metrics = evaluate_model(trained_model, X_test, y_test)
+
+            Z_acc[j, i] = metrics["accuracy"]
+            Z_f1[j, i] = metrics["f1_score"]
+
+            results.append(
+                {
+                    "max_depth": depth if depth is not None else "None",
+                    "n_estimators": n,
+                    "accuracy": metrics["accuracy"],
+                    "f1_score": metrics["f1_score"],
+                }
+            )
+
+    ax.plot_surface(X, Y, Z_acc, color='b', alpha=0.7)
+    ax.plot_surface(X, Y, Z_f1, color='r', alpha=0.7)
+
+    import matplotlib.patches as mpatches
+    acc_patch = mpatches.Patch(color='b', alpha=0.7, label='Accuracy')
+    f1_patch = mpatches.Patch(color='r', alpha=0.7, label='F1 Score')
+    ax.legend(handles=[acc_patch, f1_patch])
+
+    ax.set_title("Random Forest Performance vs Max Depth and Number of Estimators (Surface)")
+    ax.set_xlabel("Max Depth")
+    ax.set_ylabel("Number of Estimators")
+    ax.set_zlabel("Score")
+    plt.savefig(
+        "plots/rf_depth_estimators_surface.png"
+    )
+
+    results_df = pd.DataFrame(results)
+    results_df.to_csv(
+        "results/rf_depth_estimators_surface_results.csv",
+        index=False,
+    )
+
+
+
 def test_decision_tree_depth(X_train, y_train, X_test, y_test):
     max_depths = [5, 10, 20, 50, 100]
     results = []
