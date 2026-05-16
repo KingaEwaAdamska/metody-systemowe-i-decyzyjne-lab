@@ -9,24 +9,33 @@ from sklearn.preprocessing import MinMaxScaler
 
 
 def predict_fuzzy(X, y):
+    print(
+        f"SocialMedia_WhileEating, Your overeating level, Employment_Status, Low_Energy, Result, True_value"
+    )
+    i = 0
     results = []
     for idx, row in X.iterrows():
         fuzzy_sim.reset()
 
         fuzzy_sim.input["social_media_while_eating"] = row["SocialMedia_WhileEating"]
         fuzzy_sim.input["overeating_level"] = row["Your overeating level"]
-        fuzzy_sim.input["employment_status"] = row["Employment_Status"]
+        # fuzzy_sim.input["employment_status"] = row["Employment_Status"]
+        fuzzy_sim.input["low_energy"] = row["Low_Energy"]
 
         try:
             fuzzy_sim.compute()
             result = fuzzy_sim.output["depression_type"]
         except KeyError:
-            result = 5.0
+            result = 4.0
 
         print(
-            f"SocialMedia_WhileEating ={row['SocialMedia_WhileEating']}, Your overeating level = {row['Your overeating level']}, Employment_Status = {row['Employment_Status']}, result = {round(result)}, supposed = {y[idx]}"
+            f"{row['SocialMedia_WhileEating']}, {row['Your overeating level']}, {row['Employment_Status']}, {row['Low_Energy']}, {round(result)}, {y[idx]}"
         )
-        results.append(int(result))
+        if round(result) == y[idx]:
+            i += 1
+        results.append(round(result))
+
+    print(f"matches: {i}")
     return results
 
 
