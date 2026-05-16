@@ -46,6 +46,42 @@ def load_and_split_data(
     return X_train, X_test, y_train, y_test  # type: ignore
 
 
+def load_data(filepath: str, target_col: str) -> Tuple[pd.DataFrame, pd.Series]:
+    """
+    Load data from a CSV file and split it into training and testing sets.
+
+    Parameters:
+    - filepath: str - Path to the CSV file.
+    - target_col: str - Name of the target column.
+    - test_size: float - Proportion of the dataset to include in the test split.
+    - random_state: int - Controls the randomness of the split.
+
+    Returns:
+    - X_train: pd.DataFrame - Training features.
+    - X_test: pd.DataFrame - Testing features.
+    - y_train: pd.Series - Training target.
+    - y_test: pd.Series - Testing target.
+    """
+
+    df = pd.read_csv(filepath)
+
+    leaky_columns = [
+        target_col,
+        "Depression_Score",
+        "Symptoms",
+        "Nervous_Level",
+        "Coping_Methods",
+    ]
+
+    # Tworzymy zbiór cech bazujących w 100% na stylu życia i demografii
+    X = df.drop(columns=leaky_columns)
+    y = df[target_col]
+
+    print(repr(X))
+
+    return X, y
+
+
 def time_function(func):
     """
     Decorator to measure the execution time of a function.
