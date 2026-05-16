@@ -29,12 +29,12 @@ def load_and_split_data(
 
     leaky_columns = [
         target_col,
-        'Depression_Score',
-        'Symptoms',
-        'Nervous_Level',
-        'Coping_Methods'
+        "Depression_Score",
+        "Symptoms",
+        "Nervous_Level",
+        "Coping_Methods",
     ]
-    
+
     # Tworzymy zbiór cech bazujących w 100% na stylu życia i demografii
     X = df.drop(columns=leaky_columns)
     y = df[target_col]
@@ -43,7 +43,7 @@ def load_and_split_data(
         X, y, test_size=test_size, random_state=random_state, stratify=y
     )
 
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test  # type: ignore
 
 
 def time_function(func):
@@ -84,7 +84,7 @@ def evaluate_model(
     - metrics: Dict[str, Any] - A dictionary containing accuracy, F1 score, and classification report.
     """
 
-    y_pred = model.predict(X_test)
+    y_pred = model.predict(X_test)  # type: ignore
 
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average="macro")
@@ -108,7 +108,7 @@ def train_model(
     Returns:
     - model: BaseEstimator - The trained model.
     """
-    model.fit(X_train, y_train)
+    model.fit(X_train, y_train)  # type: ignore
     return model
 
 
