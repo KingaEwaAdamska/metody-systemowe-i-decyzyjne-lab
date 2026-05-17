@@ -46,40 +46,34 @@ def load_and_split_data(
     return X_train, X_test, y_train, y_test  # type: ignore
 
 
-def load_data(filepath: str, target_col: str) -> Tuple[pd.DataFrame, pd.Series]:
+def load_and_split_stripped_data(
+    filepath: str, target_col: str, test_size: float = 0.2, random_state: int = 42
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
     """
     Load data from a CSV file and split it into training and testing sets.
-
-    Parameters:
-    - filepath: str - Path to the CSV file.
-    - target_col: str - Name of the target column.
-    - test_size: float - Proportion of the dataset to include in the test split.
-    - random_state: int - Controls the randomness of the split.
-
-    Returns:
-    - X_train: pd.DataFrame - Training features.
-    - X_test: pd.DataFrame - Testing features.
-    - y_train: pd.Series - Training target.
-    - y_test: pd.Series - Testing target.
     """
 
     df = pd.read_csv(filepath)
 
-    leaky_columns = [
-        target_col,
-        "Depression_Score",
-        "Symptoms",
-        "Nervous_Level",
-        "Coping_Methods",
+    feature_cols = [
+        "Employment_Status",
+        "Low_Energy",
+        "Your overeating level",
+        "SocialMedia_WhileEating",
     ]
 
-    # Tworzymy zbiór cech bazujących w 100% na stylu życia i demografii
-    X = df.drop(columns=leaky_columns)
+    missing = [c for c in feature_cols + [target_col] if c not in df.columns]
+    if missing:
+        raise ValueError(f"Missing columns in dataset: {missing}")
+
+    X = df[feature_cols]
     y = df[target_col]
 
-    print(repr(X))
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state, stratify=y
+    )
 
-    return X, y
+    return X_train, X_test, y_train, y_test  # type: ignore
 
 
 def time_function(func):

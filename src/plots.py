@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -303,4 +304,58 @@ def test_hist_gradient_boosting(X_train, y_train, X_test, y_test):
     results_df.to_csv(
         "results/hist_gradient_boosting_lr_results.csv",
         index=False,
+    )
+
+
+def plot_count_relation(X, y, feature_col, title, filename):
+    df = X.copy()
+    df["Depression"] = y
+
+    # tabela częstości
+    ct = pd.crosstab(df[feature_col], df["Depression"])
+
+    ax = ct.plot(kind="bar", figsize=(10, 6))
+
+    ax.set_title(title)
+    ax.set_xlabel(feature_col)
+    ax.set_ylabel("Number of people")
+
+    plt.legend(title="Depression level")
+    plt.tight_layout()
+
+    plt.savefig(f"plots/{filename}")
+    plt.close()
+
+
+def plot_all_count_relations(X, y):
+    plot_count_relation(
+        X,
+        y,
+        "SocialMedia_WhileEating",
+        "Depression vs Social Media Usage (Counts)",
+        "count_social_media.png",
+    )
+
+    plot_count_relation(
+        X,
+        y,
+        "Your overeating level",
+        "Depression vs Overeating Level (Counts)",
+        "count_overeating.png",
+    )
+
+    plot_count_relation(
+        X,
+        y,
+        "Employment_Status",
+        "Depression vs Employment Status (Counts)",
+        "count_employment.png",
+    )
+
+    plot_count_relation(
+        X,
+        y,
+        "Low_Energy",
+        "Depression vs Low Energy (Counts)",
+        "count_energy.png",
     )

@@ -12,14 +12,22 @@ from plots import (
     test_random_forest_estimators,
     test_random_forest_depth_and_estimators_surface,
 )
-from utils import load_and_split_data, train_model, evaluate_model, save_model
+from utils import (
+    load_and_split_data,
+    load_and_split_stripped_data,
+    train_model,
+    evaluate_model,
+    save_model,
+)
 
 
 def main():
     DATA_PATH = "data/raw/Mental Health Classification.csv"
     TARGET_COL = "Depression_Type"
 
-    X_train, X_test, y_train, y_test = load_and_split_data(DATA_PATH, TARGET_COL)
+    X_train, X_test, y_train, y_test = load_and_split_stripped_data(
+        DATA_PATH, TARGET_COL
+    )
 
     test_random_forest_estimators(X_train, y_train, X_test, y_test)
     test_logistic_regression(X_train, y_train, X_test, y_test)

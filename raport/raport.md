@@ -1,6 +1,6 @@
-# Porównanie efektywności modeli uczenia maszynowego w klasyfikacji zdrowia psychicznego
+# Ocena skuteczności klasycznych i rozmytych modeli uczenia maszynowego w zadaniu klasyfikacji zdrowia psychicznego
 
-**Autorzy:** Kinga Adamska **(wpisz tu swuj index bo mi sie sprawdzac nie chce xd)**, Roch Mykietów 284240
+**Autorzy:** Kinga Adamska 284236, Roch Mykietów 284240
 
 ---
 
@@ -8,17 +8,23 @@
 
 ### Definicja problemu
 
-Problem badawczy polega na przewidywaniu i klasyfikacji typu depresji (`Depression_Type`) na podstawie danych zebranych w zbiorze "Mental Health Classification.csv". Głównym celem systemu jest zbudowanie optymalnego modelu predykcyjnego, który potrafi z jak najwyższą skutecznością zaklasyfikować przypadek w oparciu o zebrane cechy diagnostyczne, bazujące na stylu życia i demografii.
+Problem badawczy polega na przewidywaniu i klasyfikacji typu depresji (`Depression_Type`)
+na podstawie danych zebranych w zbiorze "Mental Health Classification.csv".
+Głównym celem systemu jest zbudowanie optymalnego modelu predykcyjnego,
+który potrafi z jak najwyższą skutecznością zaklasyfikować przypadek w oparciu o zebrane cechy diagnostyczne,
+bazujące na stylu życia i demografii.
 
 Aby zapewnić rzetelność oceny, przed przystąpieniem do uczenia wykluczono atrybuty mogące powodować bezpośredni wyciek informacji o zmiennej docelowej (tzw. _data leakage_), takie jak `Depression_Score`, `Symptoms`, `Nervous_Level` czy `Coping_Methods`.
 
 ### Złożoność problemu i metodyka
 
-Z uwagi na złożoność i wielowymiarowość danych medycznych oraz psychologicznych, relacje między cechami a zmienną wynikową mają charakter silnie nieliniowy. W celu rozwiązania problemu zrezygnowano z tradycyjnych systemów opartych o eksperckie bazy reguł (np. systemy Fuzzy Logic), przechodząc do uczenia maszynowego (ML). Zastosowanie uczenia nadzorowanego ma na celu zautomatyzowane odkrycie wzorców występujących w dużej ilości danych z możliwie wysoką generalizacją.
+Z uwagi na złożoność i wielowymiarowość danych medycznych oraz psychologicznych, relacje między cechami a zmienną wynikową mają charakter silnie nieliniowy.
 
 ---
 
-## 2. Stosowane modele uczenia maszynowego
+## 2. Stosowane sposoby rozwiązania problemu
+
+### 2.1. Stosowane modele uczenia maszynowego
 
 Dla oceny możliwości rozpoznawania wzorców użyto i porównano ze sobą 4 popularne modele uczenia maszynowego:
 
@@ -30,6 +36,8 @@ Dla oceny możliwości rozpoznawania wzorców użyto i porównano ze sobą 4 pop
    Metoda zespołowa (ang. _ensemble method_) łącząca wyniki wielu niezależnych drzew decyzyjnych (tzw. zjawisko "mądrości tłumu"). Dzięki uśrednianiu, wariant ten znacząco redukuje ryzyko przeuczenia i wariancję, zachowując przy tym wysoką moc predykcyjną.
 4. **Gradient Boosting oparty o histogramy (HistGradientBoosting):**
    Algorytm sekwencyjny budujący kolejne drzewa tak, by korygować błędy popełniane przez swoich poprzedników. Optymalizacja histogramowa pozwala znacząco przyspieszyć proces tworzenia wezłów i podziału zbiorów dla dużych wolumenów danych.
+
+### 2.2. Stosowane techniki fuzzy logic
 
 ---
 

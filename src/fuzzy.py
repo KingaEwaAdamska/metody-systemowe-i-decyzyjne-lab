@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 
 import utils
-from fuzzy_system_definition import depression_sim as fuzzy_sim
+from fuzzy_trimf_system_definition import depression_sim as fuzzy_sim
 
 from sklearn.metrics import accuracy_score, f1_score, classification_report
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
 
 
 def predict_fuzzy(X, y):
@@ -13,6 +11,7 @@ def predict_fuzzy(X, y):
         f"SocialMedia_WhileEating, Your overeating level, Employment_Status, Low_Energy, Result, True_value"
     )
     i = 0
+    s = 0
     results = []
     for idx, row in X.iterrows():
         fuzzy_sim.reset()
@@ -34,6 +33,9 @@ def predict_fuzzy(X, y):
         if round(result) == y[idx]:
             i += 1
         results.append(round(result))
+        s = y[idx] - result
+
+    print(f"mean mistake: {s / len(X)}")
 
     print(f"matches: {i}")
     return results
@@ -43,18 +45,23 @@ def main():
     DATA_PATH = "data/raw/Mental Health Classification.csv"
     TARGET_COL = "Depression_Type"
 
-    X, y = utils.load_data(DATA_PATH, TARGET_COL)
+    X, X_test, y, y_test = utils.load_and_split_stripped_data(
+        DATA_PATH, TARGET_COL, test_size=0.2
+    )
 
-    y_pred = predict_fuzzy(X, y)
+    y_pred = predict_fuzzy(X_test, y_test)
 
-    acc = accuracy_score(y, y_pred)
-    f1 = f1_score(y, y_pred, average="weighted")
-    report = classification_report(y, y_pred)
+    acc = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average="weighted")
+    report = classification_report(y_test, y_pred)
 
     print("\n=== FUZZY C-MEANS RESULTS ===")
     print(f"Accuracy: {acc:.4f}")
     print(f"F1 Score: {f1:.4f}")
     print("\nClassification Report:\n", report)
+    from plots import plot_all_count_relations
+
+    plot_all_count_relations(X, y)
 
 
 if __name__ == "__main__":

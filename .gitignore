@@ -20,5 +20,6 @@ __pycache__/
 Thumbs.db
 
 # Dane (opcjonalnie - jeśli nie chcesz wysyłać dużych plików CSV na GitHub)
-data/raw/*.csv
+*.csv
+*.png
 models/*.pkl
