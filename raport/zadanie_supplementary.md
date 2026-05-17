@@ -1,67 +1,53 @@
-Politechnika Wrocławska 
+Politechnika Wrocławska
 
-Wydział Informatyki i Telekomunikacji 
+Wydział Informatyki i Telekomunikacji
 
-Metody Systemowe i Decyzyjne 
+Metody Systemowe i Decyzyjne
 
-**Projekt semestralny – materiały dodatkowe** 
+**Projekt semestralny – materiały dodatkowe**
 
 ---
 
-Zastosowanie metaheurystyk w problemie harmonogramowania produkcji 
+## Zastosowanie metaheurystyk w problemie harmonogramowania produkcji
 
-1. Opis problemu decyzyjnego 
+1. Opis problemu decyzyjnego
 
 Rozważany jest problem harmonogramowania produkcji typu Permutation Flow Shop Scheduling Problem (PFSP). Dany jest system produkcyjny składający się z:
 
-* 
-$N$ zadań (jobs),
+- $N$ zadań (jobs),
 
-
-* 
-$M$ maszyn.
-
-
+- $M$ maszyn.
 
 Każde zadanie musi zostać wykonane na wszystkich maszynach w tej samej kolejności technologicznej:
-
 
 $$M_1 \to M_2 \to \dots \to M_M$$
 
 Nie dopuszcza się przerwania realizacji zadania na maszynie.
 
-2. Dane wejściowe 
+1. Dane wejściowe
 
 Dane problemu określa macierz czasów przetwarzania:
-
 
 $$P = [p_{j,m}]$$
 
 gdzie:
 
-* 
-$p_{j,m}$ — czas przetwarzania zadania $j$ na maszynie $m$.
-
-
+- $p_{j,m}$ — czas przetwarzania zadania $j$ na maszynie $m$.
 
 Macierz ma wymiar $N \times M$.
 Przykład macierzy czasów:
 
-
 $$P = \begin{bmatrix} 5 & 2 & 6 \\ 4 & 7 & 3 \\ 6 & 3 & 5 \end{bmatrix}$$
 
+| Zadanie | M1  | M2  | M3  |
+| :------ | :-- | :-- | :-- |
+| J1      | 5   | 2   | 6   |
+| J2      | 4   | 7   | 3   |
+| J3      | 6   | 3   | 5   |
 
-
-| Zadanie | M1 | M2 | M3 | 
-| :--- | :--- | :--- | :--- | 
-| J1 | 5 | 2 | 6 | 
-| J2 | 4 | 7 | 3 | 
-| J3 | 6 | 3 | 5 | 
-
-3. Zmienne decyzyjne 
+1. Zmienne decyzyjne
 
 Rozwiązanie problemu stanowi permutacja zadań:
-
 
 $$\pi = (\pi_1, \pi_2, \dots, \pi_N)$$
 
@@ -70,159 +56,112 @@ która określa kolejność realizacji zadań.
 Interpretacja permutacji:
 Jeżeli $\pi = (3, 1, 2)$ , to zadania wykonywane będą w kolejności:
 
-1. zadanie 3 
+1. zadanie 3
 
+2. zadanie 1
 
-2. zadanie 1 
+3. zadanie 2
 
-
-3. zadanie 2 
-
-
-
-4. Funkcja celu 
+4. Funkcja celu
 
 Celem optymalizacji jest minimalizacja czasu zakończenia wszystkich zadań (makespan):
-
 
 $$C_{max}$$
 
 czyli czasu zakończenia ostatniego zadania na ostatniej maszynie.
 
-5. Obliczanie czasu realizacji harmonogramu 
+1. Obliczanie czasu realizacji harmonogramu
 
 Czas zakończenia zadania na pozycji $i$ harmonogramu na maszynie $m$ oznaczamy jako:
-
 
 $$C(i,m)$$
 
 Obliczamy go ze wzoru:
 
-
 $$C(i,m) = \max(C(i-1,m), C(i,m-1)) + p_{\pi_i, m}$$
 
+1. Objaśnienie oznaczeń
 
+- $i$ — pozycja zadania w harmonogramie
 
-6. Objaśnienie oznaczeń 
+- $m$ — numer maszyny
 
-* 
-$i$ — pozycja zadania w harmonogramie 
+- $C(i,m)$ — czas zakończenia zadania
 
+- $\pi_i$ — numer zadania na pozycji $i$
 
-* 
-$m$ — numer maszyny 
-
-
-* 
-$C(i,m)$ — czas zakończenia zadania 
-
-
-* 
-$\pi_i$ — numer zadania na pozycji $i$ 
-
-
-* 
-$p_{j,m}$ — czas przetwarzania zadania $j$ na maszynie $m$ 
-
-
+- $p_{j,m}$ — czas przetwarzania zadania $j$ na maszynie $m$
 
 Zapis $p_{\pi_i, m}$ oznacza czas przetwarzania zadania znajdującego się na pozycji $i$ harmonogramu na maszynie $m$.
 
-7. Wartość funkcji celu 
+1. Wartość funkcji celu
 
 Ostateczna wartość funkcji celu:
 
-
 $$C_{max} = C(N,M)$$
 
-
-
-8. Algorytmy optymalizacji 
+1. Algorytmy optymalizacji
 
 W projekcie należy zaimplementować następujące algorytmy metaheurystyczne:
 
-* Algorytm genetyczny (Genetic Algorithm) 
+- Algorytm genetyczny (Genetic Algorithm)
 
+- Symulowane wyżarzanie (Simulated Annealing)
 
-* Symulowane wyżarzanie (Simulated Annealing) 
+- Algorytm kolonii mrówek (Ant Colony Optimization)
 
-
-* Algorytm kolonii mrówek (Ant Colony Optimization) 
-
-
-* Algorytm pszczeli (Bees Algorithm) 
-
-
+- Algorytm pszczeli (Bees Algorithm)
 
 ---
 
-9. Algorytm symulowanego wyżarzania 
+1. Algorytm symulowanego wyżarzania
 
 Algorytm Simulated Annealing (SA) polega na iteracyjnym przeszukiwaniu przestrzeni rozwiązań. W każdej iteracji:
 
-* generowane jest nowe rozwiązanie,
+- generowane jest nowe rozwiązanie,
 
+- obliczana jest funkcja celu,
 
-* obliczana jest funkcja celu,
+- podejmowana jest decyzja o jego akceptacji.
 
-
-* podejmowana jest decyzja o jego akceptacji.
-
-
-
-10. Dlaczego dopuszczamy gorsze rozwiązania 
+1. Dlaczego dopuszczamy gorsze rozwiązania
 
 W wielu problemach optymalizacji istnieje wiele minimów lokalnych. Algorytm, który akceptuje wyłącznie rozwiązania lepsze, może zatrzymać się w minimum lokalnym. Dlatego w algorytmie symulowanego wyżarzania dopuszcza się czasami akceptację rozwiązań gorszych, aby umożliwić dalsze przeszukiwanie przestrzeni rozwiązań.
 
-11. Kryterium akceptacji rozwiązania 
+1. Kryterium akceptacji rozwiązania
 
-Niech: 
+Niech:
 
-* 
-$x_{current}$ — aktualne rozwiązanie 
+- $x_{current}$ — aktualne rozwiązanie
 
-
-* 
-$x_{new}$ — nowe rozwiązanie 
-
-
+- $x_{new}$ — nowe rozwiązanie
 
 Funkcja celu:
 
-
 $$f(x) = C_{max}$$
 
-
-
 Zmiana funkcji celu:
-
 
 $$\Delta = f(x_{new}) - f(x_{current})$$
 
 czyli:
 
-
 $$\Delta = C_{max}^{new} - C_{max}^{current}$$
 
-
-
-12. Interpretacja wartości $\Delta$ 
+1. Interpretacja wartości $\Delta$
 
 Jeżeli $\Delta < 0$ , nowe rozwiązanie jest lepsze i zostaje zaakceptowane.
 Jeżeli $\Delta > 0$ , rozwiązanie jest gorsze i może zostać zaakceptowane z pewnym prawdopodobieństwem.
 
-13. Prawdopodobieństwo akceptacji 
+1. Prawdopodobieństwo akceptacji
 
 $$P = e^{-\frac{\Delta}{T}}$$
 
 gdzie:
 
-* 
-$T$ — temperatura algorytmu.
+- $T$ — temperatura algorytmu.
 
-
-
-14. Implementacja w MATLAB 
+1. Implementacja w MATLAB
 
 ```matlab
 delta = newCost - currentCost; [cite_start]% [cite: 915]
@@ -235,32 +174,23 @@ end %
 
 ```
 
-15. Generowanie sąsiedztwa dla permutacji 
+1. Generowanie sąsiedztwa dla permutacji
 
 W algorytmach optymalizacyjnych konieczne jest generowanie nowych rozwiązań w pobliżu aktualnego rozwiązania. Typowe operatory dla permutacji:
 
-* 
-**Swap**: zamiana dwóch zadań `[1 2 3 4 5]` $\to$ `[1 4 3 2 5]` 
+- **Swap**: zamiana dwóch zadań `[1 2 3 4 5]` $\to$ `[1 4 3 2 5]`
 
+- **Insert**: przeniesienie elementu w inne miejsce `[1 2 3 4 5]` $\to$ `[1 3 4 2 5]`
 
-* 
-**Insert**: przeniesienie elementu w inne miejsce `[1 2 3 4 5]` $\to$ `[1 3 4 2 5]` 
-
-
-* 
-**Inversion**: odwrócenie fragmentu permutacji `[1 2 3 4 5]` $\to$ `[1 4 3 2 5]` 
-
-
+- **Inversion**: odwrócenie fragmentu permutacji `[1 2 3 4 5]` $\to$ `[1 4 3 2 5]`
 
 ---
 
-16. Sugestie implementacyjne — Algorytm genetyczny 
+1. Sugestie implementacyjne — Algorytm genetyczny
 
-**Reprezentacja rozwiązania:** 
+**Reprezentacja rozwiązania:**
 
-* pojedynczy osobnik = permutacja zadań 
-
-
+- pojedynczy osobnik = permutacja zadań
 
 Przykład:
 
@@ -277,7 +207,7 @@ fitness = 1 / cost; [cite_start]% [cite: 948]
 
 ```
 
-**Przykład mutacji typu swap** 
+**Przykład mutacji typu swap**
 
 ```matlab
 [cite_start]function child = mutate_swap(child) % [cite: 950]
@@ -292,7 +222,7 @@ end %
 
 ```
 
-**Przykład selekcji turniejowej** 
+**Przykład selekcji turniejowej**
 
 ```matlab
 [cite_start]function selected = tournament_selection(population, costs, tournamentSize) % [cite: 960]
@@ -309,7 +239,7 @@ end %
 
 ```
 
-**Przykład prostego krzyżowania OX (Order Crossover)** 
+**Przykład prostego krzyżowania OX (Order Crossover)**
 
 ```matlab
 [cite_start]function child = ox_crossover(parent1, parent2) % [cite: 972]
@@ -330,7 +260,7 @@ end %
 
 ```
 
-**Schemat iteracji GA** 
+**Schemat iteracji GA**
 
 ```matlab
 [cite_start]for gen = 1:maxGenerations % [cite: 988]
@@ -371,11 +301,11 @@ end %
 
 ---
 
-17. Sugestie implementacyjne — Ant Colony Optimization 
+1. Sugestie implementacyjne — Ant Colony Optimization
 
 W algorytmie mrówkowym każda mrówka buduje permutację krok po kroku.
 
-**Inicjalizacja feromonów** 
+**Inicjalizacja feromonów**
 
 ```matlab
 tau = ones(N, N); [cite_start]% [cite: 1014]
@@ -392,7 +322,7 @@ eta = 1 ./ jobTime; [cite_start]% [cite: 1019]
 
 ```
 
-**Wybór kolejnego zadania** 
+**Wybór kolejnego zadania**
 
 ```matlab
 [cite_start]function nextJob = select_next_job(availableJobs, tauRow, eta, alpha, beta) % [cite: 1021]
@@ -409,7 +339,7 @@ end %
 
 ```
 
-**Budowa pojedynczego rozwiązania przez mrówkę** 
+**Budowa pojedynczego rozwiązania przez mrówkę**
 
 ```matlab
 [cite_start]function perm = build_ant_solution(P, tau, eta, alpha, beta) % [cite: 1033]
@@ -431,7 +361,7 @@ end %
 
 ```
 
-**Aktualizacja feromonów** 
+**Aktualizacja feromonów**
 
 ```matlab
 tau = (1 - rho) * tau; [cite_start]% [cite: 1048]
@@ -448,7 +378,7 @@ end %
 
 ```
 
-**Schemat iteracji ACO** 
+**Schemat iteracji ACO**
 
 ```matlab
 [cite_start]for iter = 1:maxIters % [cite: 1059]
@@ -477,11 +407,11 @@ end %
 
 ---
 
-18. Sugestie implementacyjne — Bees Algorithm 
+1. Sugestie implementacyjne — Bees Algorithm
 
 W algorytmie pszczelim część rozwiązań generowana jest losowo, a część powstaje przez lokalne przeszukiwanie najlepszych obszarów.
 
-**Losowe rozwiązania początkowe** 
+**Losowe rozwiązania początkowe**
 
 ```matlab
 [cite_start]for i = 1:numBees % [cite: 1078]
@@ -507,7 +437,7 @@ end %
 
 ```
 
-**Przeszukiwanie sąsiedztwa najlepszego rozwiązania** 
+**Przeszukiwanie sąsiedztwa najlepszego rozwiązania**
 
 ```matlab
 [cite_start]function bestNeighbor = explore_neighborhood(P, perm, nSearch) % [cite: 1095]
@@ -526,7 +456,7 @@ end %
 
 ```
 
-**Schemat iteracji Bees Algorithm** 
+**Schemat iteracji Bees Algorithm**
 
 ```matlab
 [cite_start]for iter = 1:maxIters % [cite: 1108]

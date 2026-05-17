@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -90,9 +91,6 @@ def test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test):
     estimator_counts = [10, 25, 50, 100, 200, 500]
     results = []
 
-    # 3d plot
-    from mpl_toolkits.mplot3d import Axes3D
-
     fig = plt.figure(figsize=(12, 8))
     ax = fig.add_subplot(111, projection="3d")
     for depth in max_depths:
@@ -115,13 +113,13 @@ def test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test):
     ax.scatter(
         results_df["max_depth"],
         results_df["n_estimators"],
-        results_df["accuracy"],
+        results_df["accuracy"],  # type: ignore
         label="Accuracy",
     )
     ax.scatter(
         results_df["max_depth"],
         results_df["n_estimators"],
-        results_df["f1_score"],
+        results_df["f1_score"],  # type: ignore
         label="F1 Score",
     )
     ax.set_title("Random Forest Performance vs Max Depth and Number of Estimators")
@@ -129,9 +127,7 @@ def test_random_forest_depth_and_estimators(X_train, y_train, X_test, y_test):
     ax.set_ylabel("Number of Estimators")
     ax.set_zlabel("Score")
     ax.legend()
-    plt.savefig(
-        "plots/rf_depth_estimators.png"
-    )
+    plt.savefig("plots/rf_depth_estimators.png")
 
     results_df.to_csv(
         "results/rf_depth_estimators_results.csv",
@@ -145,11 +141,10 @@ def test_random_forest_depth_and_estimators_surface(X_train, y_train, X_test, y_
     results = []
 
     import numpy as np
-    from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure(figsize=(12, 8))
     ax = fig.add_subplot(111, projection="3d")
-    
+
     X, Y = np.meshgrid(max_depths, estimator_counts)
     Z_acc = np.zeros(X.shape)
     Z_f1 = np.zeros(X.shape)
@@ -174,28 +169,28 @@ def test_random_forest_depth_and_estimators_surface(X_train, y_train, X_test, y_
                 }
             )
 
-    ax.plot_surface(X, Y, Z_acc, color='b', alpha=0.7)
-    ax.plot_surface(X, Y, Z_f1, color='r', alpha=0.7)
+    ax.plot_surface(X, Y, Z_acc, color="b", alpha=0.7)
+    ax.plot_surface(X, Y, Z_f1, color="r", alpha=0.7)
 
     import matplotlib.patches as mpatches
-    acc_patch = mpatches.Patch(color='b', alpha=0.7, label='Accuracy')
-    f1_patch = mpatches.Patch(color='r', alpha=0.7, label='F1 Score')
+
+    acc_patch = mpatches.Patch(color="b", alpha=0.7, label="Accuracy")
+    f1_patch = mpatches.Patch(color="r", alpha=0.7, label="F1 Score")
     ax.legend(handles=[acc_patch, f1_patch])
 
-    ax.set_title("Random Forest Performance vs Max Depth and Number of Estimators (Surface)")
+    ax.set_title(
+        "Random Forest Performance vs Max Depth and Number of Estimators (Surface)"
+    )
     ax.set_xlabel("Max Depth")
     ax.set_ylabel("Number of Estimators")
     ax.set_zlabel("Score")
-    plt.savefig(
-        "plots/rf_depth_estimators_surface.png"
-    )
+    plt.savefig("plots/rf_depth_estimators_surface.png")
 
     results_df = pd.DataFrame(results)
     results_df.to_csv(
         "results/rf_depth_estimators_surface_results.csv",
         index=False,
     )
-
 
 
 def test_decision_tree_depth(X_train, y_train, X_test, y_test):
@@ -228,9 +223,7 @@ def test_decision_tree_depth(X_train, y_train, X_test, y_test):
     plt.xlabel("Max Depth")
     plt.ylabel("Score")
     plt.legend()
-    plt.savefig(
-        "plots/decision_tree_depth.png"
-    )
+    plt.savefig("plots/decision_tree_depth.png")
 
     results_df.to_csv(
         "results/decision_tree_depth_results.csv",
@@ -261,9 +254,7 @@ def test_logistic_regression(X_train, y_train, X_test, y_test):
     plt.xlabel("C (Inverse of Regularization Strength)")
     plt.ylabel("Score")
     plt.legend()
-    plt.savefig(
-        "plots/logistic_regression_C.png"
-    )
+    plt.savefig("plots/logistic_regression_C.png")
 
     results_df.to_csv(
         "results/logistic_regression_C_results.csv",
@@ -308,9 +299,7 @@ def test_hist_gradient_boosting(X_train, y_train, X_test, y_test):
     plt.xlabel("Learning Rate")
     plt.ylabel("Score")
     plt.legend()
-    plt.savefig(
-        "plots/hist_gradient_boosting_lr.png"
-    )
+    plt.savefig("plots/hist_gradient_boosting_lr.png")
 
     results_df.to_csv(
         "results/hist_gradient_boosting_lr_results.csv",

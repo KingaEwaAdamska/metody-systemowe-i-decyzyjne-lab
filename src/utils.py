@@ -29,12 +29,12 @@ def load_and_split_data(
 
     leaky_columns = [
         target_col,
-        'Depression_Score',
-        'Symptoms',
-        'Nervous_Level',
-        'Coping_Methods'
+        "Depression_Score",
+        "Symptoms",
+        "Nervous_Level",
+        "Coping_Methods",
     ]
-    
+
     # Tworzymy zbiór cech bazujących w 100% na stylu życia i demografii
     X = df.drop(columns=leaky_columns)
     y = df[target_col]
@@ -43,7 +43,37 @@ def load_and_split_data(
         X, y, test_size=test_size, random_state=random_state, stratify=y
     )
 
-    return X_train, X_test, y_train, y_test
+    return X_train, X_test, y_train, y_test  # type: ignore
+
+
+def load_and_split_stripped_data(
+    filepath: str, target_col: str, test_size: float = 0.2, random_state: int = 42
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    """
+    Load data from a CSV file and split it into training and testing sets.
+    """
+
+    df = pd.read_csv(filepath)
+
+    feature_cols = [
+        "Employment_Status",
+        "Low_Energy",
+        "Your overeating level",
+        "SocialMedia_WhileEating",
+    ]
+
+    missing = [c for c in feature_cols + [target_col] if c not in df.columns]
+    if missing:
+        raise ValueError(f"Missing columns in dataset: {missing}")
+
+    X = df[feature_cols]
+    y = df[target_col]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state, stratify=y
+    )
+
+    return X_train, X_test, y_train, y_test  # type: ignore
 
 
 def time_function(func):
@@ -84,7 +114,7 @@ def evaluate_model(
     - metrics: Dict[str, Any] - A dictionary containing accuracy, F1 score, and classification report.
     """
 
-    y_pred = model.predict(X_test)
+    y_pred = model.predict(X_test)  # type: ignore
 
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average="macro")
@@ -108,7 +138,7 @@ def train_model(
     Returns:
     - model: BaseEstimator - The trained model.
     """
-    model.fit(X_train, y_train)
+    model.fit(X_train, y_train)  # type: ignore
     return model
 
 
