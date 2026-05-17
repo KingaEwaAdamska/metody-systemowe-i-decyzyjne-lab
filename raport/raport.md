@@ -1,24 +1,26 @@
-# Ocena skuteczności klasycznych i rozmytych modeli uczenia maszynowego w zadaniu klasyfikacji zdrowia psychicznego
+# Porównanie systemów logiki rozmytej i uczenia maszynowego w klasyfikacji zdrowia psychicznego
 
 **Autorzy:** Kinga Adamska 284236, Roch Mykietów 284240
 
 ---
 
-## 1. Charakterystyka problemu
+## 1. Cel i charakter problemu
 
 ### Definicja problemu
 
 Problem badawczy polega na przewidywaniu i klasyfikacji typu depresji (`Depression_Type`)
 na podstawie danych zebranych w zbiorze "Mental Health Classification.csv".
-Głównym celem systemu jest zbudowanie optymalnego modelu predykcyjnego,
-który potrafi z jak najwyższą skutecznością zaklasyfikować przypadek w oparciu o zebrane cechy diagnostyczne,
-bazujące na stylu życia i demografii.
+Głównym celem systemu jest porównanie logiki rozmytej i uczenia maszynowego w klasyfikacji zdrowia psychicznego.
 
 Aby zapewnić rzetelność oceny, przed przystąpieniem do uczenia wykluczono atrybuty mogące powodować bezpośredni wyciek informacji o zmiennej docelowej (tzw. _data leakage_), takie jak `Depression_Score`, `Symptoms`, `Nervous_Level` czy `Coping_Methods`.
 
+W dalszej analizie metodą ... wybrano 4 wartości: `Your overeating level`, `SocialMedia_While_eating`, `Employement_status`, `Low_Energy` pozwalające na kompromis między dokładnością a złożonością analizy danych, oraz w celu porównawczym wytestowano także modele szkolone na pełnym zbiorze danych
+
 ### Złożoność problemu i metodyka
 
-Z uwagi na złożoność i wielowymiarowość danych medycznych oraz psychologicznych, relacje między cechami a zmienną wynikową mają charakter silnie nieliniowy.
+Z uwagi na złożoność i wielowymiarowość danych medycznych oraz psychologicznych, relacje między cechami a zmienną wynikową mają charakter silnie nieliniowy, co znacząco utrudnia użycie fuzzy logic.
+
+**tu wpadną wykresy z rozłożeniem depression_type oraz innych parametrów w danych wejsciowych, żeby wyjaśnić dlaczego porównawczymi metodami jest acuraccy i F1 score, warto też wspomnieć imo o prędkości działania gotowego modelu**
 
 ---
 
@@ -38,6 +40,12 @@ Dla oceny możliwości rozpoznawania wzorców użyto i porównano ze sobą 4 pop
    Algorytm sekwencyjny budujący kolejne drzewa tak, by korygować błędy popełniane przez swoich poprzedników. Optymalizacja histogramowa pozwala znacząco przyspieszyć proces tworzenia wezłów i podziału zbiorów dla dużych wolumenów danych.
 
 ### 2.2. Stosowane techniki fuzzy logic
+
+**to będzie opisane bardziej profesjonalnie**
+
+1. Basic Fuzzy - wykorzystuje ręcznie napisane reguły na podstawie wcześniejszej analizy danych
+2. Data Driven Fuzzy - wykorzystuje clustering **Fuzzy C-Means**
+3. Data Driven Pure Fuzzy - wykorzystuje clustering **Fuzzy C-Means** rozszerzając poprzedni system o filtr jakości klastra.
 
 ---
 
@@ -77,6 +85,7 @@ Analiza zachowania złożoności modelu determinowanej przez maksymalną głębo
 | 50                   | 0.9850   | 0.9615   |
 | 100                  | 0.9850   | 0.9615   |
 
+cp
 **Analiza:**
 Płytkie drzewa (głębokość 5) są niedouczone (ang. _underfitting_) i osiągają relatywnie niskie rezultaty (Accuracy: 71.2%). Dopiero zagłębienie drzew od ok. 20 poziomów zapewnia najwyższą, stabilną jakość wyników (98.5%).
 
@@ -132,7 +141,9 @@ Wrażliwość współczynnika optymalizacji procesu gradientowego w iteracyjnym 
 **Analiza:**
 Kluczem do optymalnego gradient boostingu okazały się bardzo niskie wartości współczynnika uczenia. Optymalną wydajność osiągnięto przy bardzo wolnym uczeniu i dopasowywaniu wag `learning_rate` na poziomie zaledwie 0.01 (Accuracy 98%). Znaczne podniesienie progu nauki doprowadza szybko do "wystrzelenia" i utraty sterowności po funkcji błędu (drastyczny spadek dokładności już przy LR=0.2).
 
----
+### 3.6
+
+## **Tu wpadną wykresy porównujące różne purity, sposoby wybierania reguł fuzzy logic i inne takie itp.**
 
 ## 4. Porównanie działania algorytmów (Optymalizacja przestrzeni wielowymiarowej)
 
@@ -142,10 +153,13 @@ Poniżej zamieszczono dodatkowy wykres wizualizujący zachowanie jakości modelu
 
 Przestrzeń poszukiwań potwierdza zjawisko stabilnego płaskowyżu. Najwyższa jakość gwarantowana jest dla rozwiązań odciętych z głębokością ponad 20 oraz wielkością lasu powyżej 100 składowych.
 
+**tutaj chciałabym wrzucić jak radziły sobie modele o wyższych i niższych ilosciach danych wejsciowych uwzględniając czas pracy ale tez F1 (okazuje się że fuzzy logic wcale nie wypada tak źle na tle modeli, ponieważ liczy się nie tylko accuracy)**
+
 ---
 
 ## 5. Wnioski i podsumowanie
 
+**wnioskami się jeszcze nie zajmowałam, bo fajnie najpierw zrobić wcześniejszą część raportu w pełni**
 Zestawienie całościowe wskazuje bezsprzecznie na fakt wyższości skomplikowanych i złożonych struktur modeli opartych na zespołach nieliniowych modeli decyzyjnych do klasyfikacji problemu zdrowia psychicznego na podstawie atrybutów życiowych:
 
 - **Przewaga opartych na drzewach modeli nad modelami liniowymi**: Algorytmy Random Forest, Decision Tree czy HistGradientBoosting operują na sprawności oscylującej wokół wskaźnika 98,5%. Dla porównania uwarunkowany liniowo model Logistic Regression ma wynik słabszy rzędu ~62.5%. To dowodzi ewidentnego i złożonego nieliniowego splotu atrybutów.

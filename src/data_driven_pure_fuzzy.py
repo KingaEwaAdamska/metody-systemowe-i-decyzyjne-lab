@@ -50,11 +50,9 @@ def generate_pure_rules(X, y, cntr, u, purity_threshold=0.75):
 
         purity = most_count / total
 
-        # 🚨 filtrujemy brudne klastry
         if purity < purity_threshold:
             continue
 
-        # dodatkowo: entropy jako "pewność"
         probs = np.array(list(counts.values())) / total
         entropy = -np.sum(probs * np.log(probs + 1e-9))
 
@@ -98,7 +96,6 @@ def predict(X, rules):
                 best_score = score
                 best_rule = r
 
-        # 🔧 safety net (NAJWAŻNIEJSZE)
         if best_rule is None:
             best_rule = min(rules, key=lambda r: np.linalg.norm(x - r["center"]))
 
@@ -147,4 +144,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
